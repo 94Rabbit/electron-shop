@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/jquery-1.10.2.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js"></script>
+    <link rel="stylesheet" href="./css/animate.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/home.css">
+</head>
+<body ng-controller="ctrl">
+    <nav class="nav">
+        <div class="logo" style="-webkit-app-region:drag"><img src="./img/logo.png" alt=""></div>
+        <ul class="menu">
+            <li><a href="javascript:return false;" ng-click="navigator.goHome()"><span class="menu-icon"><img src="./img/home.png"  alt=""></span><span class="menu-albel">home</span></a></li>
+            <li><a href="javascript:return false;" ng-click="navigator.goShopcart()"><span class="menu-icon"><img src="./img/cart.png"  alt=""></span><span class="menu-albel">Shopcart</span></a></li>
+            <li><a href="javascript:return false;" ng-click="navigator.goService()"><span class="menu-icon"><img src="./img/atm-away.png"  alt=""></span><span class="menu-albel">Service</span></a></li>
+            <li><a href="javascript:return false;" ng-click="navigator.goShopping()"><span class="menu-icon"><img src="./img/shop.png"  alt=""></span><span class="menu-albel">Shopping</span></a></li>
+            <li><a href="javascript:return false;" ng-click="navigator.goNotification()"><span class="menu-icon"><img src="./img/remind.png"  alt=""></span><span class="menu-albel">Notification</span></a></li>
+            <li><a href="javascript:return false;" ng-click="navigator.goLogistics()"><span class="menu-icon"><img src="./img/auto.png"  alt=""></span><span class="menu-albel">Logistics</span></a></li>
+        </ul>
+        <div class="sysBtn">
+            <a id="min" href="javascript:;"><img src="./img/minus.png" alt=""></a>
+            <a id="close" href="javascript:;"><img src="./img/close.png" alt=""></a>
+        </div>
+    </nav>
+    <article>
+        <section class="tree">
+            <ul>
+                <li><a id="menu" href="javascript:;"><i class="icon"><img src="./img/category.png" alt=""></i><i class="title">Menu</i></a></li>
+                <li><a href="#/computers"><i class="icon"><img src="./img/set.png" alt=""></i><i class="title">Options</i></a></li>
+                <li><a href="#/printers"><i class="icon"><img src="./img/search.png" alt=""></i><i class="title">Search</i></a></li>
+            </ul>
+        </section>
+        <div class="router-view" ng-show="selectedTabName == 'home' " ng-include="'./view/home.html'">
+        </div>
+        <div class="router-view" ng-show="selectedTabName == 'shopcart'" ng-include="'./view/shopcart.html'">
+        </div>
+        <div class="router-view" ng-show="selectedTabName == 'service'" ng-include="'./view/service.html'">
+        </div>
+        <div class="router-view" ng-show="selectedTabName == 'shopping'" ng-include="'./view/shopping.html'">
+        </div>
+        <div class="router-view" ng-show="selectedTabName == 'notification'" ng-include="'./view/notification.html'">
+        </div>
+        <div class="router-view" ng-show="selectedTabName == 'logistics'" ng-include="'./view/logistics.html'">
+        </div>
+    </article>
+</body>
+<script>
+   const {ipcRenderer} = require('electron');
+
+   let  closeBtn = document.getElementById('close'),
+        selection = '',
+        minBtn = document.getElementById('min');
+        //open-dialog
+        closeBtn.addEventListener('click',()=>{
+            ipcRenderer.send('open-dialog');
+        });
+        //判断选的是什么
+        ipcRenderer.on('selection',(event,arg) =>{
+            ipcRenderer.send('close-win',arg);
+        });
+        //min window
+        minBtn.addEventListener('click',()=>{
+            ipcRenderer.send('minWin','success');
+        });
+
+        //menu操作
+        let menuBtn = document.getElementById('menu');
+        menuBtn.addEventListener('click',function(){
+            ipcRenderer.send('newWin');
+        });
+</script>
+<script>
+    //自己写的路由不生效
+ /*   angular.module('app',['ngRoute'])
+        .config(['$routeProvider', function($routeProvider){
+            $routeProvider
+                .when('/home',{templateUrl:'view/home.html'})
+                .when('/',{template:'这是首页页面'})
+                .when('/computers',{template:'这是电脑分类页面'})
+                .when('/printers',{templateUrl:'view/search.html'})
+                .otherwise({redirectTo:'/'});
+
+        }]);
+    app.controller('ctrl',['$scope',function($scope){
+        $scope.show = function(){
+            alert('123');
+        }
+    }]);*/
+</script>
+<script>
+    let root = angular.module('app',[]);
+    root.controller('ctrl',['$scope',function($scope){
+        $scope.selectedTabName = "home";
+        $scope.navigator = {
+            goHome:()=>{
+                $scope.selectedTabName = "home";
+            },
+            goShopcart:()=>{
+                $scope.selectedTabName = "shopcart";
+            },
+            goService:()=>{
+                $scope.selectedTabName = "service";
+            },
+            goShopping:()=>{
+                $scope.selectedTabName = "shopping";
+            },
+            goNotification:()=>{
+                $scope.selectedTabName = "notification";
+            },
+            goLogistics:()=> {
+                $scope.selectedTabName = "logistics";
+            }
+        }
+    }]);
+</script>
+<script>
+    require('./lib/home.js');
+    require('./lib/shopcart.js');
+</script>
+<script>
+        var btn = document.getElementById('btn');
+        btn.onclick = function(){
+            alert('123');
+        }
+</script>
+</html>
