@@ -1,0 +1,7 @@
+.thumbnail{
+    box-shadow: 1px 1px 1px gray;
+}
+.thumbnail:hover{
+    box-shadow:inset 1px 1px 1px gray;
+    transition: box-shadow 10s ease;
+}
