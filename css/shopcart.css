@@ -1,7 +1,19 @@
 .thumbnail{
     box-shadow: 1px 1px 1px gray;
 }
-.thumbnail:hover{
-    box-shadow:inset 1px 1px 1px gray;
-    transition: box-shadow 10s ease;
+.thumbnail img{
+    border:1px solid transparent;
+}
+/*.thumbnail:hover{*/
+    /*box-shadow:inset 1px 1px 1px gray;*/
+    /*transition: box-shadow 10s ease;*/
+/*}*/
+.thumbnail img:hover{
+    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+    -webkit-filter: blur(3px); /* Chrome, Opera */
+    -moz-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+    cursor: pointer;
+    transition: filter 1s;
 }
