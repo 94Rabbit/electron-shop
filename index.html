@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="./css/animate.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/shopcart.css">
 </head>
 <body ng-controller="ctrl">
     <nav class="nav">
@@ -75,24 +76,6 @@
         menuBtn.addEventListener('click',function(){
             ipcRenderer.send('newWin');
         });
-</script>
-<script>
-    //自己写的路由不生效
- /*   angular.module('app',['ngRoute'])
-        .config(['$routeProvider', function($routeProvider){
-            $routeProvider
-                .when('/home',{templateUrl:'view/home.html'})
-                .when('/',{template:'这是首页页面'})
-                .when('/computers',{template:'这是电脑分类页面'})
-                .when('/printers',{templateUrl:'view/search.html'})
-                .otherwise({redirectTo:'/'});
-
-        }]);
-    app.controller('ctrl',['$scope',function($scope){
-        $scope.show = function(){
-            alert('123');
-        }
-    }]);*/
 </script>
 <script>
     let root = angular.module('app',[]);
